@@ -1,0 +1,851 @@
+@use './native-details';
+
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../../../../assets/ramflix/outfit-latin.woff2') format('woff2');
+}
+
+/* Source components own the layout. These rules style native Jellyfin content. */
+.ramflix-app {
+    --rf-ink: #f7f7f8;
+    --rf-muted: #a2a5ae;
+    --rf-surface: rgba(26, 28, 34, 0.62);
+    --rf-line: rgba(255, 255, 255, 0.12);
+    --rf-gutter: clamp(20px, 2.5vw, 64px);
+    --jf-palette-primary-main: #f5f5f7;
+    --jf-palette-primary-mainChannel: 245 245 247;
+    --jf-palette-primary-contrastText: #15171d;
+    --jf-palette-primary-dark: #d8d9df;
+    --jf-palette-primary-light: #fff;
+    --jf-typography-fontFamily: 'Outfit', sans-serif;
+    color: var(--rf-ink);
+    background: #080a0f;
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    overflow-x: clip;
+
+    .ramflix-cinematic-content {
+        isolation: isolate;
+    }
+
+    .ramflix-cinematic-content::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-image: var(--ramflix-artwork);
+        background-size: 100% auto;
+        background-repeat: repeat-y;
+        opacity: 0.16;
+        filter: blur(65px) saturate(0.6);
+    }
+
+    .ramflix-flow-page {
+        position: relative !important;
+        contain: style !important;
+        top: auto;
+        left: auto;
+        width: 100%;
+    }
+
+    .ramflix-toolbar,
+    .ramflix-hero,
+    .ramflix-hero-copy,
+    .ramflix-featured-row,
+    .ramflix-page {
+        box-sizing: border-box;
+    }
+
+    > header.MuiAppBar-root {
+        background: transparent;
+        box-shadow: none;
+        pointer-events: none;
+    }
+
+    .ramflix-toolbar {
+        padding: 8px var(--rf-gutter);
+        gap: 8px;
+        min-height: 64px;
+        pointer-events: auto;
+    }
+
+    .ramflix-brand {
+        display: flex;
+        align-items: center;
+        margin-right: 4px;
+    }
+
+    .ramflix-brand img {
+        width: 46px;
+        height: 46px;
+        object-fit: contain;
+    }
+
+    .ramflix-back {
+        color: var(--rf-ink);
+    }
+
+    .ramflix-desktop-nav {
+        margin-left: auto;
+    }
+
+    .ramflix-desktop-nav,
+    .ramflix-header-actions {
+        display: flex;
+        align-items: center;
+        background: rgba(14, 15, 21, 0.6);
+        backdrop-filter: blur(24px) saturate(125%);
+        border: 1px solid var(--rf-line);
+        border-radius: 999px;
+        padding: 4px;
+    }
+
+    .ramflix-desktop-nav .MuiButton-root {
+        color: #a9abb3;
+        border-radius: 999px;
+        text-transform: none;
+        font:
+            600 13px 'Outfit',
+            sans-serif;
+        padding: 8px 20px;
+    }
+
+    .ramflix-desktop-nav .selected {
+        background: #fafafa;
+        color: #15161a;
+        box-shadow: 0 1px 16px #ffffff20;
+    }
+
+    .ramflix-header-actions .MuiIconButton-root {
+        color: #d8d9df;
+    }
+
+    .ramflix-mobile-sync,
+    .ramflix-dock {
+        display: none;
+    }
+
+    .ramflix-hero {
+        height: clamp(430px, 48vh, 600px);
+        position: relative;
+        isolation: isolate;
+        margin-top: -64px;
+        padding-top: 64px;
+        overflow: hidden;
+        background: #10121a;
+    }
+
+    .ramflix-hero-art,
+    .ramflix-hero-scrim {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .ramflix-hero-art {
+        object-fit: cover;
+        object-position: center 30%;
+    }
+
+    .ramflix-hero-scrim {
+        background:
+            linear-gradient(0deg, #080a0f 0%, rgba(8, 10, 15, 0.15) 65%),
+            linear-gradient(90deg, rgba(8, 10, 15, 0.9), rgba(8, 10, 15, 0.25) 60%, rgba(8, 10, 15, 0.3));
+    }
+
+    .ramflix-hero-copy {
+        padding: clamp(32px, 5vh, 72px) var(--rf-gutter) 24px;
+        width: min(600px, 45%);
+    }
+
+    .ramflix-hero-copy h1 {
+        font-size: clamp(34px, 3.2vw, 72px);
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+        margin: 0 0 22px;
+    }
+
+    .ramflix-title-art {
+        display: block;
+        max-width: 100%;
+        width: 410px;
+        height: 120px;
+        object-fit: contain;
+        object-position: left center;
+        margin-bottom: 20px;
+    }
+
+    .ramflix-hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .ramflix-hero-copy p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: #e5e6ec;
+        margin: 22px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .ramflix-hero-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .ramflix-hero-actions .MuiButton-root {
+        background: #f8f8fa;
+        color: #111318;
+        border-radius: 999px;
+        padding: 10px 24px;
+        text-transform: none;
+        font-weight: 700;
+        box-shadow: none;
+    }
+
+    .ramflix-hero-actions .MuiIconButton-root {
+        background: #ffffff16;
+        color: #fff;
+        border: 1px solid #ffffff20;
+        backdrop-filter: blur(12px);
+    }
+
+    .ramflix-hero-pagination {
+        position: absolute;
+        right: var(--rf-gutter);
+        bottom: 75px;
+        display: grid;
+        gap: 10px;
+        justify-items: end;
+    }
+
+    .ramflix-hero-pagination .MuiIconButton-root {
+        color: #fff;
+        background: #ffffff0c;
+        margin-left: 8px;
+    }
+
+    .ramflix-hero-dots {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+    }
+
+    .ramflix-hero-dots button {
+        width: 24px;
+        height: 24px;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .ramflix-hero-dots button::after {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        background: #fff5;
+        border-radius: 99px;
+        margin: auto;
+    }
+
+    .ramflix-hero-dots button.selected::after {
+        width: 23px;
+        background: #fff;
+    }
+
+    .ramflix-hero.loading {
+        background: linear-gradient(110deg, #10131b, #212734, #10131b);
+    }
+
+    .ramflix-catalog-heading {
+        padding: 8px var(--rf-gutter) 16px;
+    }
+
+    .ramflix-catalog-heading > h1 {
+        font-size: 36px;
+        letter-spacing: -0.04em;
+        margin: 12px 0 16px;
+    }
+
+    .ramflix-catalog-heading > .MuiToolbar-root {
+        padding: 0;
+        border: 0;
+        background: transparent;
+    }
+
+    .ramflix-catalog-heading .MuiButton-root,
+    .ramflix-catalog-heading .MuiChip-root {
+        border-radius: 999px;
+    }
+
+    .ramflix-catalog-heading .MuiButtonGroup-root {
+        border: 1px solid var(--rf-line);
+        border-radius: 999px;
+        background: #ffffff06;
+    }
+
+    .ramflix-featured-row {
+        padding: 6px 0 38px;
+    }
+
+    .ramflix-featured-row h2 {
+        margin: 12px var(--rf-gutter) 22px;
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    .ramflix-featured-row > div {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 0 var(--rf-gutter) 12px;
+        scroll-snap-type: x proximity;
+        scrollbar-width: thin;
+        scrollbar-color: #ffffff25 transparent;
+    }
+
+    .ramflix-featured-row a {
+        display: block;
+        position: relative;
+        flex: 0 0 clamp(230px, 12.5vw, 320px);
+        aspect-ratio: 16/9;
+        border-radius: 10px;
+        overflow: hidden;
+        color: #fff;
+        scroll-snap-align: start;
+        text-decoration: none;
+        box-shadow: 0 8px 20px #0004;
+    }
+
+    .ramflix-featured-row img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .ramflix-featured-row span {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 26px 14px 12px;
+        background: linear-gradient(transparent, #000c);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .cardBox {
+        margin: 0 8px;
+    }
+
+    .cardScalable,
+    .cardImageContainer {
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .cardImageContainer {
+        box-shadow: 0 10px 24px #0004;
+    }
+
+    .cardText {
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    .sectionTitle {
+        font-size: 20px;
+        letter-spacing: -0.02em;
+    }
+
+    .padded-left {
+        padding-left: var(--rf-gutter);
+    }
+
+    .padded-right {
+        padding-right: var(--rf-gutter);
+    }
+
+    .verticalSection {
+        margin-bottom: 34px;
+    }
+
+    .cardOverlayContainer {
+        border-radius: 9px;
+    }
+
+    .ramflix-glass {
+        background: var(--rf-surface);
+        border: 1px solid var(--rf-line);
+        border-radius: 20px;
+        backdrop-filter: blur(24px);
+    }
+
+    .ramflix-page {
+        max-width: 1160px;
+        margin: 32px auto 80px;
+        padding: 0 var(--rf-gutter);
+    }
+
+    .ramflix-page-heading {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 26px;
+    }
+
+    .ramflix-page h1 {
+        font-size: clamp(28px, 3vw, 44px);
+        letter-spacing: -0.04em;
+        margin: 8px 0;
+    }
+
+    .ramflix-page h2 {
+        font-size: 20px;
+    }
+
+    .ramflix-page p {
+        color: var(--rf-muted);
+        line-height: 1.6;
+    }
+
+    .ramflix-page .MuiButton-root {
+        text-transform: none;
+        border-radius: 999px;
+    }
+
+    .ramflix-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+    }
+
+    .ramflix-list-link {
+        display: flex;
+        gap: 18px;
+        padding: 22px;
+        color: inherit;
+        text-decoration: none;
+        align-items: center;
+    }
+
+    .ramflix-list-link p {
+        margin: 5px 0 0;
+        font-size: 13px;
+    }
+
+    .ramflix-list-link > span {
+        margin-left: auto;
+    }
+
+    .ramflix-empty {
+        margin: 24px 0;
+        padding: 64px 24px;
+        text-align: center;
+    }
+
+    .ramflix-list-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+    }
+
+    .ramflix-list-grid a {
+        color: inherit;
+        padding: 18px;
+        text-decoration: none;
+    }
+
+    .ramflix-list-grid img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .ramflix-periods,
+    .ramflix-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 24px 0;
+    }
+
+    .ramflix-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 32px 0;
+    }
+
+    .ramflix-stat-grid > div {
+        padding: 28px;
+    }
+
+    .ramflix-stat-grid strong {
+        font-size: 36px;
+    }
+
+    .ramflix-stat-grid p {
+        font-size: 13px;
+        margin-bottom: 0;
+    }
+
+    .ramflix-leaderboard {
+        padding: 14px 24px;
+    }
+
+    .ramflix-leaderboard > div {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--rf-line);
+    }
+
+    .ramflix-leaderboard > div:last-child {
+        border-bottom: 0;
+    }
+
+    .ramflix-leaderboard strong {
+        flex-grow: 1;
+    }
+
+    .ramflix-channel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 14px;
+    }
+
+    .ramflix-channel-grid article {
+        position: relative;
+        padding: 20px;
+    }
+
+    .ramflix-channel-grid article > button:first-child {
+        background: none;
+        border: 0;
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .ramflix-channel-grid img {
+        width: 88px;
+        height: 60px;
+        object-fit: contain;
+        margin: 6px 0 14px;
+    }
+
+    .ramflix-channel-grid article > .MuiIconButton-root {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+    }
+
+    .ramflix-channel-grid span {
+        font-size: 12px;
+        color: var(--rf-muted);
+    }
+
+    .ramflix-voice {
+        max-width: 760px;
+        padding-top: 40px;
+    }
+
+    .ramflix-voice form {
+        margin: 30px 0;
+        padding: 26px;
+    }
+
+    .ramflix-voice form > div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 20px;
+    }
+
+    a:focus-visible,
+    /* stylelint-disable-next-line no-descending-specificity -- Focus applies across distinct controls. */
+    button:focus-visible {
+        outline: 2px solid #a6c9ff;
+        outline-offset: 4px;
+    }
+}
+
+.ramflix-tools {
+    min-width: 240px;
+    padding: 8px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- The dock is also mounted inside the fixed app bar. */
+.ramflix-dock {
+    pointer-events: auto;
+}
+
+.ramflix-native-tools {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 14px;
+}
+
+.ramflix-streams {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ramflix-program {
+    display: flex;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid #ffffff18;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- Program labels and featured labels are separate components. */
+.ramflix-program span {
+    flex-shrink: 0;
+    color: #a2a5ae;
+}
+
+@media (min-width: 1200px) {
+    .ramflix-app .portraitCard {
+        width: 10%;
+    }
+}
+
+@media (min-width: 1800px) {
+    .ramflix-app .portraitCard {
+        width: 8.333333%;
+    }
+}
+
+@media (max-width: 768px) {
+    .ramflix-app {
+        --rf-gutter: 18px;
+        padding-bottom: calc(86px + env(safe-area-inset-bottom));
+
+        .ramflix-toolbar {
+            min-height: 58px;
+            padding: 7px 14px;
+        }
+
+        .ramflix-brand img {
+            width: 38px;
+            height: 38px;
+        }
+
+        .ramflix-back,
+        .ramflix-desktop-nav {
+            display: none;
+        }
+
+        .ramflix-header-actions {
+            margin-left: auto;
+            padding: 2px;
+        }
+
+        .ramflix-mobile-sync {
+            display: block;
+        }
+
+        .ramflix-header-actions .MuiIconButton-root {
+            padding: 8px;
+        }
+
+        .ramflix-dock {
+            position: fixed;
+            bottom: calc(12px + env(safe-area-inset-bottom));
+            left: 12px;
+            right: 12px;
+            z-index: 1101;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: rgba(23, 25, 32, 0.86);
+            border: 1px solid #ffffff20;
+            border-radius: 26px;
+            padding: 7px 4px;
+            backdrop-filter: blur(28px);
+            box-shadow: 0 8px 32px #0007;
+        }
+
+        .ramflix-dock a {
+            color: #9397a3;
+            text-decoration: none;
+            min-width: 44px;
+            min-height: 46px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border-radius: 18px;
+        }
+
+        .ramflix-dock a.selected {
+            color: #fff;
+            background: #ffffff12;
+        }
+
+        .ramflix-dock span {
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .ramflix-dock svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .ramflix-hero {
+            height: 560px;
+            max-height: 76vh;
+            margin-top: -58px;
+            padding-top: 58px;
+        }
+
+        .ramflix-hero-art {
+            object-position: 65% top;
+        }
+
+        .ramflix-hero-scrim {
+            background: linear-gradient(0deg, #080a0f, #080a0fc9 35%, #080a0f10 85%);
+        }
+
+        .ramflix-hero-copy {
+            position: absolute;
+            bottom: 50px;
+            width: auto;
+            left: 0;
+            right: 0;
+            padding: 20px var(--rf-gutter);
+        }
+
+        .ramflix-hero-copy h1 {
+            font-size: 34px;
+        }
+
+        .ramflix-title-art {
+            width: 270px;
+            height: 88px;
+            margin-bottom: 14px;
+        }
+
+        .ramflix-hero-meta {
+            gap: 10px;
+            font-size: 11px;
+        }
+
+        .ramflix-hero-copy p {
+            font-size: 13px;
+            -webkit-line-clamp: 2;
+            margin: 14px 0;
+        }
+
+        .ramflix-hero-pagination {
+            bottom: 16px;
+            right: 18px;
+        }
+
+        .ramflix-hero-pagination > div:first-child {
+            display: none;
+        }
+
+        .ramflix-catalog-heading > h1 {
+            font-size: 29px;
+        }
+
+        .ramflix-featured-row {
+            padding-bottom: 18px;
+        }
+
+        .ramflix-featured-row a {
+            flex-basis: 230px;
+        }
+
+        .ramflix-page {
+            margin-top: 20px;
+        }
+
+        .ramflix-stat-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        /* stylelint-disable-next-line no-descending-specificity -- Responsive stats cards do not match hero pagination. */
+        .ramflix-stat-grid > div {
+            padding: 22px;
+        }
+
+        .ramflix-stat-grid strong {
+            font-size: 28px;
+        }
+
+        .ramflix-channel-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .ramflix-channel-grid article {
+            padding: 16px;
+        }
+
+        .ramflix-page-heading {
+            align-items: flex-start;
+        }
+
+        .ramflix-voice {
+            padding-top: 12px;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ramflix-app * {
+        scroll-behavior: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .ramflix-app .ramflix-header-actions .MuiIconButton-root {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+.ramflix-app .ramflix-award {
+    padding: 24px;
+}
+
+.ramflix-app .ramflix-channel-grid strong {
+    overflow-wrap: anywhere;
+}

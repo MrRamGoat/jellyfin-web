@@ -1,0 +1,32 @@
+name: RamFLIX client
+
+on:
+  push:
+    branches: [ramflix-client]
+  pull_request:
+    branches: [ramflix-base-12.2, ramflix-client]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build:check
+      - run: npx eslint src/apps/modern/features/ramflix src/apps/modern/routes/ramflix src/apps/modern/AppLayout.tsx src/apps/modern/components/AppToolbar/index.tsx src/components/CustomCss.tsx src/apps/modern/routes/asyncRoutes/user.ts src/apps/modern/routes/home.tsx src/apps/modern/features/libraries/components/LibraryPage.tsx src/apps/modern/routes/video/index.tsx
+      - run: npx stylelint 'src/apps/modern/features/ramflix/*.scss'
+      - run: npm test -- --run
+      - run: npm run build:production
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ramflix-web-12.2
+          path: dist
+          retention-days: 14

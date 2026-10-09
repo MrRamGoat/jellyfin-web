@@ -1,0 +1,236 @@
+/* Native title pages retain their actions and use a compact, flowing content column. */
+@media (min-width: 769px) {
+    .ramflix-app .itemDetailPage {
+        > .itemBackdrop {
+            height: clamp(110px, 16vh, 150px) !important;
+            min-height: 0 !important;
+        }
+
+        > .detailLogo {
+            display: none !important;
+        }
+
+        .detailPagePrimaryContainer {
+            display: grid;
+            grid-template-columns: clamp(180px, 18vw, 270px) minmax(0, 1fr);
+            grid-template-rows: auto auto;
+            gap: 18px 30px;
+            width: 100% !important;
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 0 32px 24px;
+            box-sizing: border-box;
+            align-items: start;
+        }
+
+        .detailPagePrimaryContainer > .detailImageContainer {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            height: auto;
+            min-width: 0;
+            position: static;
+        }
+
+        .detailPagePrimaryContainer > .detailImageContainer > .card {
+            position: relative !important;
+            float: none !important;
+            inset: auto !important;
+            width: 100% !important;
+            max-width: none;
+            margin: 0 !important;
+        }
+
+        .detailRibbon {
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 14px;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 12px 4px 16px !important;
+            height: auto !important;
+            background: transparent;
+        }
+
+        .detailRibbon .infoWrapper {
+            flex: 0 0 auto;
+            width: 100%;
+            padding: 0 !important;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .detailRibbon .itemName {
+            font-size: clamp(25px, 2.2vw, 36px);
+            margin: 0 0 10px;
+            text-align: left;
+        }
+
+        .detailRibbon .mainDetailButtons {
+            flex: 0 0 auto;
+            margin: 0;
+            justify-content: flex-start;
+        }
+
+        .detailPagePrimaryContent {
+            grid-column: 2;
+            grid-row: 2;
+            width: auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            min-width: 0;
+        }
+
+        .detailPagePrimaryContent .detailSection {
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0 4px;
+            margin: 0 0 18px;
+        }
+
+        .detailPagePrimaryContent .overview {
+            margin-top: 0;
+        }
+
+        .detailPageSecondaryContainer {
+            width: 100%;
+            min-width: 0;
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 16px 32px 50px !important;
+            box-sizing: border-box;
+        }
+
+        .mainDetailButtons .btnPlay {
+            border-radius: 999px;
+            background: #f5f5f7;
+            color: #15171d;
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1000px) {
+    .ramflix-app .itemDetailPage .detailPagePrimaryContainer {
+        grid-template-columns: 190px minmax(0, 1fr);
+        gap: 16px 22px;
+        padding-inline: 22px;
+    }
+
+    .ramflix-app .itemDetailPage .detailPagePrimaryContainer > .detailImageContainer.hide-mobile {
+        display: block !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .ramflix-app .itemDetailPage {
+        .detailPagePrimaryContainer {
+            padding-inline: 18px;
+            box-sizing: border-box;
+        }
+
+        .detailPagePrimaryContainer > .detailImageContainer.hide-mobile {
+            display: none !important;
+        }
+
+        .detailRibbon {
+            width: auto;
+            padding: 18px 0;
+            height: auto;
+            background: transparent;
+        }
+
+        .detailRibbon .infoWrapper {
+            display: grid;
+            grid-template-columns: 92px minmax(0, 1fr);
+            gap: 12px 18px;
+            width: 100%;
+            padding: 0;
+            text-align: left;
+        }
+
+        .detailRibbon .infoWrapper > .detailImageContainer {
+            grid-row: 1 / span 3;
+            width: 92px;
+            margin: 0;
+        }
+
+        .detailRibbon .infoWrapper > :not(.detailImageContainer) {
+            grid-column: 2;
+            min-width: 0;
+        }
+
+        .detailRibbon .detailImageContainer .portraitCard {
+            width: 100% !important;
+        }
+
+        .detailRibbon .detailImageContainer .card {
+            position: relative !important;
+            inset: auto !important;
+            transform: none !important;
+            margin: 0 !important;
+        }
+
+        .detailRibbon .itemName {
+            margin: 0;
+            font-size: clamp(22px, 5.5vw, 32px);
+            overflow-wrap: anywhere;
+        }
+
+        .detailRibbon .itemMiscInfo {
+            grid-column: 1 / -1 !important;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mediaInfoItem {
+            max-width: 100%;
+            min-width: 0;
+            white-space: normal !important;
+        }
+
+        .mainDetailButtons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0;
+            width: 100%;
+        }
+
+        .mainDetailButtons .detailButton {
+            box-sizing: border-box;
+            min-width: 48px;
+            min-height: 48px;
+            margin: 0;
+            border-radius: 999px;
+        }
+
+        .trackSelections {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .trackSelectionFieldContainer {
+            min-width: 0;
+            max-width: 100%;
+            flex: 1 1 180px;
+        }
+
+        .detailPagePrimaryContent {
+            padding-left: 0 !important;
+            padding-right: 0;
+            margin-top: 16px;
+        }
+
+        .detailPageSecondaryContainer {
+            min-width: 0;
+            box-sizing: border-box;
+        }
+    }
+}

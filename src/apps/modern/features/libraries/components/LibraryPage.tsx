@@ -47,8 +47,8 @@ const LibraryPage: FC<LibraryPageProps> = ({
     return (
         <Page
             id={PAGE_IDS[type]}
-            className={'mainAnimatedPage libraryPage pageWithAbsoluteTabs withTabs'}
-            backDropType={PAGE_BACKDROPS[type]}
+            className={'mainAnimatedPage libraryPage ramflix-flow-page pageWithAbsoluteTabs withTabs'}
+            backDropType={type === CollectionType.Movies || type === CollectionType.Tvshows ? undefined : PAGE_BACKDROPS[type]}
         >
             <PageTabContent
                 key={`${currentTab.viewType}-${libraryId}`}

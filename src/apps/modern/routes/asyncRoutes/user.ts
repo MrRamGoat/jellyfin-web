@@ -2,6 +2,10 @@ import { AsyncRoute } from 'components/router/AsyncRoute';
 import { AppType } from 'constants/appType';
 
 export const ASYNC_USER_ROUTES: AsyncRoute[] = [
+    { path: 'ramflix/lists', type: AppType.Modern },
+    { path: 'ramflix/guide', type: AppType.Modern },
+    { path: 'ramflix/stats', type: AppType.Modern },
+    { path: 'ramflix/voice', type: AppType.Modern },
     { path: 'home', type: AppType.Modern },
     { path: 'homevideos', type: AppType.Modern },
     { path: 'livetv', type: AppType.Modern },

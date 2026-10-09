@@ -10,6 +10,7 @@ import RemotePlayButton from './RemotePlayButton';
 import SyncPlayButton from './SyncPlayButton';
 import SearchButton from './SearchButton';
 import UserViewNav from './userViews/UserViewNav';
+import RamflixNavigation from '../../features/ramflix/RamflixNavigation';
 
 interface AppToolbarProps {
     isDrawerAvailable: boolean
@@ -32,6 +33,8 @@ const AppToolbar: FC<AppToolbarProps> = ({
 
     // Check if the current path is a public path to hide user content
     const isPublicPath = PUBLIC_PATHS.includes(location.pathname);
+
+    if (!isPublicPath) return <RamflixNavigation />;
 
     return (
         <BaseToolbar
