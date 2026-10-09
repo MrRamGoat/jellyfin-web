@@ -1,94 +1,94 @@
-import React, { useCallback } from 'react';
-
+import React, { useCallback, useState } from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Popover from '@mui/material/Popover';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import 'components/alphaPicker/style.scss';
-
 interface AlphabetPickerProps {
-    value?: string | null;
-    onChange: (value: string | null | undefined) => void;
+    readonly value?: string | null;
+    readonly onChange: (value: string | null | undefined) => void;
 }
+const LETTER_VALUES = [
+    '#',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z'
+];
 
-const LETTER_VALUES = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
-const AlphabetPicker: React.FC<AlphabetPickerProps> = ({
-    value,
-    onChange
-}) => {
+/** Keep the native alphabet filter reachable without covering cinematic artwork. */
+const AlphabetPicker: React.FC<AlphabetPickerProps> = ({ value, onChange }) => {
+    const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+    const open = useCallback((event: React.MouseEvent<HTMLElement>) => setAnchor(event.currentTarget), []);
+    const close = useCallback(() => setAnchor(null), []);
     const handleValue = useCallback(
-        (
-            event: React.MouseEvent<HTMLElement>,
-            newValue: string | null | undefined
-        ) => {
+        (_event: React.MouseEvent<HTMLElement>, newValue: string | null | undefined) => {
             onChange(newValue);
+            close();
         },
-        [onChange]
+        [onChange, close]
     );
-
     return (
-        <Box
-            className='alphaPicker-fixed-right'
-            // eslint-disable-next-line react/jsx-no-bind
-            sx={theme => ({
-                position: 'fixed',
-                top: {
-                    xs: '144px', // Extra small screens the AppBar wraps to 3 rows (128px) and we align top with 16px of spacing
-                    sm: '96px' // Small screens the AppBar is 2 rows (96px) and we align center (no extra spacing)
-                },
-                bottom: 0,
-                fontSize: '80%',
-                display: 'flex',
-                alignItems: {
-                    xs: 'flex-start',
-                    sm: 'center'
-                },
-                // This should render under the main AppBar if overlapping
-                zIndex: theme.zIndex.appBar - 1
-            })}
-        >
-            <Paper
-                elevation={0}
-                sx={{
-                    borderRadius: 1,
-                    overflow: 'hidden'
-                }}
+        <Box className='padded-left padded-right' sx={{ marginBottom: 2 }}>
+            <Button
+                variant='text'
+                color='inherit'
+                onClick={open}
+                aria-haspopup='true'
+                aria-expanded={Boolean(anchor)}
+            >
+                {value ? `A–Z · ${value}` : 'A–Z'}
+            </Button>
+            <Popover
+                open={Boolean(anchor)}
+                anchorEl={anchor}
+                onClose={close}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             >
                 <ToggleButtonGroup
-                    orientation='vertical'
                     value={value}
                     exclusive
                     color='primary'
-                    size='small'
                     onChange={handleValue}
+                    aria-label='Filter titles by initial'
+                    sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: 300, padding: 1 }}
                 >
-                    {LETTER_VALUES.map((l) => (
+                    {LETTER_VALUES.map((letter) => (
                         <ToggleButton
-                            key={l}
-                            value={l}
-                            sx={{
-                                borderWidth: 0,
-                                paddingTop: {
-                                    xs: 0,
-                                    md: 0.25
-                                },
-                                paddingBottom: {
-                                    xs: 0,
-                                    md: 0.25
-                                },
-                                paddingLeft: 0.5,
-                                paddingRight: 0.5
-                            }}
+                            key={letter}
+                            value={letter}
+                            aria-label={`Titles starting with ${letter}`}
+                            sx={{ minWidth: 44, minHeight: 44, border: 0 }}
                         >
-                            {l}
+                            {letter}
                         </ToggleButton>
                     ))}
                 </ToggleButtonGroup>
-            </Paper>
+            </Popover>
         </Box>
     );
 };
-
 export default AlphabetPicker;

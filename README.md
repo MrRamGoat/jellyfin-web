@@ -1,4 +1,9 @@
-<h1 align="center">Jellyfin Web</h1>
+<h1 align="center">RamFLIX Web</h1>
+
+RamFLIX source client, built from Jellyfin Web v12.2. See [RAMFLIX.md](RAMFLIX.md)
+for components, build instructions, optional services, deployment, and rollback.
+The `ramflix-client` branch is the maintained client; `master` tracks upstream development.
+
 <h3 align="center">Part of the <a href="https://jellyfin.org">Jellyfin Project</a></h3>
 
 ---

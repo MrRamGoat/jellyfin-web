@@ -9,6 +9,7 @@ import ViewManagerPage from 'components/viewManager/ViewManagerPage';
 import { EventType } from 'constants/eventType';
 import Events, { type Event } from 'utils/events';
 import Typography from '@mui/material/Typography';
+import TouchSeek from '../../features/ramflix/TouchSeek';
 
 /**
  * Video player page component that renders mui controls for the top controls and the legacy view for everything else.
@@ -44,6 +45,7 @@ const VideoPage: FC = () => {
 
     return (
         <>
+            <TouchSeek />
             <Fade
                 in={isVisible}
                 easing='fade-out'

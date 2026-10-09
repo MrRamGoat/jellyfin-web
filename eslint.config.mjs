@@ -425,5 +425,10 @@ export default tseslint.config(
             'sonarjs/no-nested-functions': 'off',
             'sonarjs/void-use': 'off'
         }
+    },
+    {
+        // Small source route components pass data into event handlers without memoized consumers.
+        files: ['src/apps/modern/features/ramflix/**/*.{ts,tsx}', 'src/apps/modern/routes/ramflix/**/*.tsx'],
+        rules: { 'react/jsx-no-bind': ['error', { allowArrowFunctions: true }] }
     }
 );
